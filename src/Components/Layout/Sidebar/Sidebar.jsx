@@ -13,6 +13,8 @@ import {
   UserPlus,
 } from "lucide-react";
 import Dashboard from "@/Components/Dashboard/Dashboard";
+import ProduuctUpload from "@/Components/Product/ProduuctUpload/ProduuctUpload";
+import ProductView from "@/Components/Product/ProductView/ProductView";
 
 
 export default function Sidebar() {
@@ -34,7 +36,8 @@ export default function Sidebar() {
 
   const menuItems = [
     { id: "dashboard", name: "Dashboard", icon: LayoutDashboard },
-    { id: "Product", name: "Product", icon: CalendarCheck },
+    { id: "ProduuctUpload", name: "Product", icon: CalendarCheck },
+    { id: "ProductView", name: "Product View", icon: CalendarCheck },
   ];
 
   const handleLinkClick = (id) => {
@@ -46,6 +49,10 @@ export default function Sidebar() {
     switch (currentView) {
       case "dashboard":
         return <Dashboard />;
+      case "ProduuctUpload":
+        return <ProduuctUpload />;
+      case "ProductView":
+        return <ProductView />;
       default:
         return <Dashboard />;
     }
