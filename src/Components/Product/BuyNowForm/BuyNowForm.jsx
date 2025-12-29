@@ -1,30 +1,40 @@
 
+
 "use client";
 import React, { useState } from "react";
 import { X, ShoppingCart, Package, Phone, User, MapPin } from "lucide-react";
+import axios from "axios";
 
 const BuyNowForm = ({ product, onClose }) => {
   const [form, setForm] = useState({
     name: "",
     phone: "",
-    quantity: product.quantity,
+    quantity: product.quantity > 0 ? 1 : 0, // default 1 if available
     address: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    alert(`
-Order Placed ✅
-Product: ${product.scrapName}
-Quantity: ${form.quantity} Kg
-Total: ₹${form.quantity * product.price}
-    `);
+    try {
+      const response = await axios.post("http://localhost:5000/api/orders", {
+        name: form.name,
+        phone: form.phone,
+        quantity: Number(form.quantity),
+        address: form.address,
+        productName: product.scrapName,
+        productPrice: product.price,
+      });
 
-    onClose();
+      alert(`Order Placed ✅\nTotal: ₹${response.data.order.total}`);
+      onClose();
+    } catch (error) {
+      console.error(error);
+      alert("Failed to place order. Please try again!");
+    }
   };
 
-  const totalPrice = form.quantity * product.price;
+  const totalPrice = Number(form.quantity) * product.price;
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex justify-center items-start overflow-auto p-4">
@@ -146,7 +156,13 @@ Total: ₹${form.quantity * product.price}
                   className="w-full border-2 border-gray-200 px-4 py-3 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
                   value={form.quantity}
                   onChange={(e) =>
-                    setForm({ ...form, quantity: e.target.value })
+                    setForm({
+                      ...form,
+                      quantity:
+                        e.target.value > product.quantity
+                          ? product.quantity
+                          : e.target.value,
+                    })
                   }
                 />
                 <p className="text-xs text-gray-500 mt-1">
