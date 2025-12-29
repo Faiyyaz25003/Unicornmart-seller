@@ -11,10 +11,12 @@ import {
   Menu,
   X,
   UserPlus,
+  ContactIcon,
 } from "lucide-react";
 import Dashboard from "@/Components/Dashboard/Dashboard";
 import ProduuctUpload from "@/Components/Product/ProduuctUpload/ProduuctUpload";
 import ProductView from "@/Components/Product/ProductView/ProductView";
+import Contact from "@/Components/Contact/Contact";
 
 
 export default function Sidebar() {
@@ -38,6 +40,7 @@ export default function Sidebar() {
     { id: "dashboard", name: "Dashboard", icon: LayoutDashboard },
     { id: "ProduuctUpload", name: "Product", icon: CalendarCheck },
     { id: "ProductView", name: "Product View", icon: CalendarCheck },
+    { id: "contact", name: "Contact", icon: ContactIcon }, // ✅
   ];
 
   const handleLinkClick = (id) => {
@@ -53,6 +56,8 @@ export default function Sidebar() {
         return <ProduuctUpload />;
       case "ProductView":
         return <ProductView />;
+      case "contact":
+        return <Contact />;
       default:
         return <Dashboard />;
     }
