@@ -17,6 +17,7 @@ import Dashboard from "@/Components/Dashboard/Dashboard";
 import ProduuctUpload from "@/Components/Product/ProduuctUpload/ProduuctUpload";
 import ProductView from "@/Components/Product/ProductView/ProductView";
 import Contact from "@/Components/Contact/Contact";
+import Profile from "@/Components/Profile/Profile";
 
 
 export default function Sidebar() {
@@ -41,6 +42,7 @@ export default function Sidebar() {
     { id: "ProduuctUpload", name: "Product", icon: CalendarCheck },
     { id: "ProductView", name: "Product View", icon: CalendarCheck },
     { id: "contact", name: "Contact", icon: ContactIcon }, // ✅
+    { id: "profile", name: "Profile", icon: ContactIcon }, // ✅
   ];
 
   const handleLinkClick = (id) => {
@@ -58,6 +60,8 @@ export default function Sidebar() {
         return <ProductView />;
       case "contact":
         return <Contact />;
+      case "profile":
+        return<Profile/>
       default:
         return <Dashboard />;
     }
