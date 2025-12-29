@@ -2,12 +2,21 @@
 
 "use client";
 import React, { useState } from "react";
-import { X, ShoppingCart, Package, Phone, User, MapPin } from "lucide-react";
+import {
+  X,
+  ShoppingCart,
+  Package,
+  Phone,
+  User,
+  MapPin,
+  Mail,
+} from "lucide-react";
 import axios from "axios";
 
 const BuyNowForm = ({ product, onClose }) => {
   const [form, setForm] = useState({
     name: "",
+    email: "",
     phone: "",
     quantity: product.quantity > 0 ? 1 : 0, // default 1 if available
     address: "",
@@ -19,6 +28,7 @@ const BuyNowForm = ({ product, onClose }) => {
     try {
       const response = await axios.post("http://localhost:5000/api/orders", {
         name: form.name,
+        email: form.email,
         phone: form.phone,
         quantity: Number(form.quantity),
         address: form.address,
@@ -95,8 +105,8 @@ const BuyNowForm = ({ product, onClose }) => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Row 1: Name and Phone */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Row 1: Name, Email, Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Name Input */}
               <div className="relative">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -114,6 +124,29 @@ const BuyNowForm = ({ product, onClose }) => {
                     className="w-full border-2 border-gray-200 pl-11 pr-4 py-3 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              {/* Email Input */}
+              <div className="relative">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email
+                </label>
+                <div className="relative">
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    className="w-full border-2 border-gray-200 pl-11 pr-4 py-3 rounded-lg focus:border-green-500 focus:outline-none transition-colors"
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
                   />
                 </div>
               </div>
