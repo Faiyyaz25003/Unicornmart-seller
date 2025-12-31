@@ -11,19 +11,24 @@ export default function ProfileDisplay() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token"); // 🔑 token se hi identify karo
 
-    if (!storedUser) {
+    if (!token) {
       router.push("/login");
       return;
     }
 
-    const loggedUser = JSON.parse(storedUser);
-
     axios
-      .get(`http://localhost:5000/api/users/${loggedUser._id}`)
+      .get("http://localhost:5000/api/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => setUser(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        router.push("/login"); // token invalid -> login page
+      });
   }, [router]);
 
   if (!user) {
@@ -56,46 +61,37 @@ export default function ProfileDisplay() {
 
           {/* RIGHT DATA – 2 COLUMNS */}
           <div className="grid grid-cols-2 gap-x-10 gap-y-3 text-gray-800 w-full">
-            {/* COLUMN 1 (5 ITEMS) */}
             <p>
               <b>Name:</b> {user.name}
             </p>
-
             <p>
               <b>Email:</b> {user.email}
             </p>
-
             <p>
               <b>Phone:</b> {user.phone || "-"}
             </p>
-
             <p>
               <b>Gender:</b> {user.gender || "-"}
             </p>
-
             <p>
               <b>Role:</b> {user.role}
             </p>
 
-            {/* COLUMN 2 (4 ITEMS) */}
             {user.shopName && (
               <p>
                 <b>Shop / Company:</b> {user.shopName}
               </p>
             )}
-
             {user.businessType && (
               <p>
                 <b>Business Type:</b> {user.businessType}
               </p>
             )}
-
             {user.gstNumber && (
               <p>
                 <b>GST Number:</b> {user.gstNumber}
               </p>
             )}
-
             {user.joinDate && (
               <p>
                 <b>Joined On:</b> {new Date(user.joinDate).toLocaleDateString()}
