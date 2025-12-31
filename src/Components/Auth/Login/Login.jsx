@@ -338,6 +338,7 @@ export default function Login() {
   };
 
   // Handle login submit
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -349,12 +350,12 @@ export default function Login() {
         role: "seller",
       });
 
-      // ✅ Save logged-in user in localStorage
+      // ✅ SAVE TOKEN & USER
+      localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert(res.data.message || "Login successful");
 
-      // ✅ Redirect to dashboard
       window.location.href = "/dashboard";
     } catch (err) {
       alert(err?.response?.data?.message || "Login Failed");
