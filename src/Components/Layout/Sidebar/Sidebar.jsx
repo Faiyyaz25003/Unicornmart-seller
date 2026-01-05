@@ -18,6 +18,7 @@ import ProduuctUpload from "@/Components/Product/ProduuctUpload/ProduuctUpload";
 import ProductView from "@/Components/Product/ProductView/ProductView";
 import Contact from "@/Components/Contact/Contact";
 import Profile from "@/Components/Profile/Profile";
+import ComplaintForm from "@/Components/ComplaintForm/ComplaintForm";
 
 
 export default function Sidebar() {
@@ -41,7 +42,8 @@ export default function Sidebar() {
     { id: "dashboard", name: "Dashboard", icon: LayoutDashboard },
     { id: "ProduuctUpload", name: "Product", icon: CalendarCheck },
     { id: "ProductView", name: "Product View", icon: CalendarCheck },
-    { id: "contact", name: "Contact", icon: ContactIcon }, // ✅
+    { id: "contact", name: "Contact", icon: ContactIcon },
+    { id: "complaintForm", name: "Complaint", icon: ContactIcon },
     { id: "profile", name: "Profile", icon: ContactIcon }, // ✅
   ];
 
@@ -60,6 +62,8 @@ export default function Sidebar() {
         return <ProductView />;
       case "contact":
         return <Contact />;
+      case "complaintForm":
+        return <ComplaintForm />;
       case "profile":
         return<Profile/>
       default:
